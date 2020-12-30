@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: spark-on-localhost-example
+spec:
+  template:
+    spec:
+      containers:
+        - name: spark
+          image: k8s-test/spark:v2.4.4
+          imagePullPolicy: Never
+          command: [
+            "/bin/sh",
+            "-c",
+            "/opt/spark/bin/spark-submit \
+            --master k8s://https://172.18.0.2:6443 \
+            --deploy-mode cluster \
+            --name spark-pi \
+            --class org.apache.spark.examples.SparkPi \
+            --conf spark.executor.instances=2 \
+            --conf spark.kubernetes.container.image=k8s-test/spark-on-localhost:v1.0 \
+            --conf spark.kubernetes.container.image.pullPolicy=Never \
+            --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
+            --executor-memory 500M \
+            /opt/spark/examples/jars/spark-examples_2.11-2.4.4.jar 100"
+          ]
+      serviceAccountName: spark
+      restartPolicy: Never
+  backoffLimit: 4

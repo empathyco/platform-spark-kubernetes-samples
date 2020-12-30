@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: spark-on-localhost
+spec:
+  template:
+    spec:
+      containers:
+        - name: spark
+          image: k8s-test/spark:v2.4.4
+          imagePullPolicy: Never
+          command: [
+            "/bin/sh",
+            "-c",
+            "/opt/spark/bin/spark-submit \
+            --master k8s://https://172.18.0.2:6443 \
+            --deploy-mode cluster \
+            --name spark-on-localhost \
+            --class ValueZones \
+            --conf spark.executor.instances=1 \
+            --conf spark.executor.memory=2G \
+            --conf spark.executor.cores=2 \
+            --conf spark.sql.shuffle.partitions=60 \
+            --conf spark.kubernetes.container.image=k8s-test/spark-on-localhost:v1.0 \
+            --conf spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem \
+            --conf spark.kubernetes.container.image.pullPolicy=Never \
+            --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
+            local:///opt/spark/jars/spark-on-eks-assembly-v1.0.jar \
+            \"s3a://nyc-tlc/trip data/yellow_tripdata_2018*.csv\" \
+            \"s3a://nyc-tlc/trip data/green_tripdata_2018*.csv\" \
+            \"s3a://nyc-tlc/misc/taxi _zone_lookup.csv\" \
+            \"local:///tmp/\""
+          ]
+      serviceAccountName: spark
+      restartPolicy: Never
+  backoffLimit: 4

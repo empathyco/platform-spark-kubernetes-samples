@@ -1,0 +1,63 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: spark-kubernetes-dag
+spec:
+  entrypoint: sparkling
+  templates:
+  - name: sparkpi
+    container:
+      image: k8s-test/spark:v2.4.4
+      imagePullPolicy: Never
+      command: [
+        "/bin/sh",
+        "-c",
+        "/opt/spark/bin/spark-submit \
+        --master k8s://https://172.18.0.2:6443 \
+        --deploy-mode cluster \
+        --name spark-pi \
+        --class org.apache.spark.examples.SparkPi \
+        --conf spark.executor.instances=2 \
+        --conf spark.kubernetes.container.image=k8s-test/spark-on-localhost:v1.0 \
+        --conf spark.kubernetes.container.image.pullPolicy=Never \
+        --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
+        --executor-memory 500M \
+        /opt/spark/examples/jars/spark-examples_2.11-2.4.4.jar 100"
+      ]
+  - name: spark-eks
+    container:
+      image: k8s-test/spark:v2.4.4
+      imagePullPolicy: Never
+      command: [
+        "/bin/sh",
+        "-c",
+        "/opt/spark/bin/spark-submit \
+        --master k8s://https://172.18.0.2:6443 \
+        --deploy-mode cluster \
+        --name spark-on-localhost \
+        --class ValueZones \
+        --conf spark.executor.instances=1 \
+        --conf spark.executor.memory=2G \
+        --conf spark.executor.cores=2 \
+        --conf spark.sql.shuffle.partitions=60 \
+        --conf spark.kubernetes.container.image=k8s-test/spark-on-localhost:v1.0 \
+        --conf spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem \
+        --conf spark.kubernetes.container.image.pullPolicy=Never \
+        --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
+        local:///opt/spark/jars/spark-on-eks-assembly-v1.0.jar \
+        \"s3a://nyc-tlc/trip data/yellow_tripdata_2018*.csv\" \
+        \"s3a://nyc-tlc/trip data/green_tripdata_2018*.csv\" \
+        \"s3a://nyc-tlc/misc/taxi _zone_lookup.csv\" \
+        \"local:///tmp/\""
+      ]
+  - name: sparkling
+    dag:
+      tasks:
+      - name: SparkPi1
+        template: sparkpi
+      - name: SparkPi2
+        dependencies: [SparkPi1]
+        template: sparkpi
+      - name: SparkPi3
+        dependencies: [SparkPi1]
+        template: sparkpi
