@@ -170,3 +170,4 @@ Hitting http://localhost:2746 the workflows can be found out
 * https://godatadriven.com/blog/spark-kubernetes-argo-helm/
 * https://github.com/aws-samples/amazon-eks-apache-spark-etl-sample 
 * https://itnext.io/migrating-apache-spark-workloads-from-aws-emr-to-kubernetes-463742b49fda
+* https://youtu.be/rpN9IsihEKI
