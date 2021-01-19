@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: topclicked-on-localhost-example-bitnami
+spec:
+  template:
+    spec:
+      containers:
+        - name: spark
+          image: topclicked-k8s:bitnami
+          imagePullPolicy: Never
+          command: [
+            "/bin/sh",
+            "-c",
+            "/opt/spark/bin/spark-submit \
+            --master k8s://https://172.18.0.2:6443 \
+            --deploy-mode cluster \
+            --name topclicked \
+            --class com.eb.data.batch.impl.TopClickedBatchMainClass \
+            --conf spark.executor.instances=2 \
+            --conf spark.kubernetes.container.image=topclicked-k8s:bitnami \
+            --conf spark.kubernetes.container.image.pullPolicy=Never \
+            --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
+            --conf spark.jars.ivy=/tmp/.ivy \
+            --executor-memory 500M \
+            /opt/spark/jars/eb-data-scommon-assembly-dev.jar 100"
+          ]
+      serviceAccountName: spark
+      restartPolicy: Never
+  backoffLimit: 4
+
+
+  #Submit Spark Batch:{'queue': 'main', 'numExecutors': 15, 'executorCores': 2, 'executorMemory': '4g', 'driverMemory': '60g', 'driverCores': 2, 'className': 'com.eb.data.batch.impl.TopClickedBatchMainClass', 'file': 's3://eb-staging-emr-libs-fer9f96w/data/spark-batch-assembly-1.6.9-79-g696887a.jar', 'conf': {'spark.executor.extraJavaOptions': '-Denvironment=PRE', 'spark.driver.extraJavaOptions': '-Denvironment=PRE'}, 'args': ['--spring.profiles.active=config.zk', '--spring.profiles.active=staging']}
