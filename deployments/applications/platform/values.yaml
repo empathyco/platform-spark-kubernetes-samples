@@ -1,8 +1,8 @@
-project: platform
+project: default
 spec:
   source:
     repoURL: 'https://github.com/empathyco/platform-spark-kubernetes-samples.git'
-    targetRevision: master
+    targetRevision: main
   destination:
     server: 'https://kubernetes.default.svc'
   syncPolicy:
