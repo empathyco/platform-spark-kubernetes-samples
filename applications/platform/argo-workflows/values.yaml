@@ -1,0 +1,43 @@
+argo:
+  images:
+    tag: v3.0.1
+    
+  installCRD: true
+
+  # https://argoproj.github.io/argo-workflows/workflow-controller-configmap/
+  controller:
+    parallelism: 10
+    workflowDefaults:
+      spec:
+        ttlStrategy:
+          secondsAfterCompletion: 259200
+    workflowNamespaces:
+      - default
+    metricsConfig:
+      enabled: true
+      path: /metrics
+      port: 9090
+    serviceMonitor:
+      enabled: true
+      additionalLabels: 
+        release: prometheus
+    containerRuntimeExecutor: k8sapi
+    extraEnv:
+      - name: LEADER_ELECTION_IDENTITY
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+  server:
+    secure: false
+    extraArgs:
+      - --secure=false
+    ingress:
+      enabled: true
+      hosts:
+        - argo-workflows.localhost
+
+
+useStaticCredentials: false
+
+  

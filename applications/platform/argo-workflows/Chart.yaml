@@ -1,0 +1,8 @@
+apiVersion: v2
+name: argo-workflows
+version: 0.16.8 # Keeps parity with the official argo-workflows chart https://artifacthub.io/packages/helm/argo/argo
+description: Helm chart for Argo Workflows deployment
+dependencies:
+  - name: argo
+    version: 0.16.8
+    repository: https://argoproj.github.io/argo-helm
