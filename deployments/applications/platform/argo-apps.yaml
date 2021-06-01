@@ -2,16 +2,16 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: platform-apps
-  namespace: argocd
+  namespace: default
 spec:
   project: default
   source:
     repoURL: 'https://github.com/empathyco/platform-spark-kubernetes-samples.git'
     path: deployments/applications/platform
-    targetRevision: master
+    targetRevision: main
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: argocd
+    namespace: default
   syncPolicy:
     automated:
       prune: false
