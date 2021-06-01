@@ -9,6 +9,6 @@ spec:
     server: {{ .Values.spec.destination.server }}
   project: {{ .Values.project }}
   source:
-    path: applications/platform/monitoring/prometheus
+    path: applications/platform/argo-workflows
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
