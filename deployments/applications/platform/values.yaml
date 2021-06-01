@@ -1,7 +1,7 @@
 project: platform
 spec:
   source:
-    repoURL: 'https://github.com/empathyco/platform-eks-test-workloads.git'
+    repoURL: 'https://github.com/empathyco/platform-spark-kubernetes-samples.git'
     targetRevision: master
   destination:
     server: 'https://kubernetes.default.svc'
