@@ -1,0 +1,9 @@
+apiVersion: v2
+name: spark-operator
+type: application
+# https://github.com/GoogleCloudPlatform/spark-on-k8s-operator/tree/master/charts/spark-operator-chart
+version: 1.1.0
+dependencies:
+  - name: spark-operator
+    version: 1.1.0
+    repository: https://googlecloudplatform.github.io/spark-on-k8s-operator

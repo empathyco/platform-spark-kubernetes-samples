@@ -1,0 +1,9 @@
+spark-operator:
+  # Fix image tag due to using latest by default
+  # https://github.com/GoogleCloudPlatform/spark-on-k8s-operator/issues/1253
+  image:
+    tag: v1beta2-1.2.3-3.1.1
+  webhook:
+    enable: true
+  podMonitor:
+    enable: true
