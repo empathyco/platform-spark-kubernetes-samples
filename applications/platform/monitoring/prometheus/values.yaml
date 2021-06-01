@@ -1,0 +1,88 @@
+kube-prometheus-stack:
+  # Remove some rules we cannot scrape
+  defaultRules:
+    rules:
+      etcd: false
+      kubeScheduler: false
+
+  alertmanager:
+    ingress: 
+      enabled: true 
+      hosts: 
+        - alertmanager.localhost
+      paths: 
+        - /
+    
+  grafana:
+    enabled: true
+    ingress: 
+      enabled: true 
+      hosts: 
+        - grafana.localhost
+      paths: 
+        - /
+    # Leaving for easy access, but is default values
+    sidecar:
+      dashboards:
+        enabled: true
+        label: grafana_dashboard
+        provider:
+          # allow updating provisioned dashboards from the UI
+          allowUiUpdates: false
+      datasources:
+        enabled: true
+        defaultDatasourceEnabled: true
+        label: grafana_datasource
+
+  # Remove some scrapings we cannot perform
+  kubeControllerManager:
+    enabled: false
+  kubeEtcd:
+    enabled: false
+  kubeScheduler:
+    enabled: false
+  kubeProxy:
+    enabled: false
+
+  prometheus:
+    enabled: true
+    ingress:
+      enabled: true 
+      
+      hosts: 
+        - prometheus.localhost
+      paths: 
+        - /
+    ## Settings affecting prometheusSpec
+    ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#prometheusspec
+    ##
+    prometheusSpec:
+      # Do not use Helm labels as selectors for prometheusRules
+      ruleSelectorNilUsesHelmValues: false
+      # Select prometheusRules with label "release:prometheus" 
+      ruleSelector:
+        matchLabels:
+          release: prometheus
+
+      # Do not use Helm labels as selectors for serviceMonitors
+      serviceMonitorSelectorNilUsesHelmValues: false
+      # Select serviceMonitors with label "release:prometheus" 
+      serviceMonitorSelector:
+        matchLabels:
+          release: prometheus
+
+      # Do not use Helm labels as selectors for podMonitor
+      podMonitorSelectorNilUsesHelmValues: false
+      # Select podMonitors with label "release:prometheus" 
+      podMonitorSelector:
+        matchLabels:
+          release: prometheus
+          
+      evaluationInterval: 1m
+      scrape_interval: 1m
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 1000Mi
+      scrapeInterval: 1m
+
