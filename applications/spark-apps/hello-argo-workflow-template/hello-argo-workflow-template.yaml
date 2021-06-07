@@ -1,0 +1,67 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: hello-argo-workflow-template
+spec:
+  serviceAccountName: spark
+  entrypoint: hello-workflow-template
+  activeDeadlineSeconds: 10800 # 3h
+  ttlStrategy:
+    secondsAfterCompletion: 604800 # 7d
+  arguments:
+    parameters:
+      - name: job
+        value: 'jobName'
+      - name: mainClass
+        value: 'org.apache.spark.examples.SparkPi'
+  templates:
+    - name: hello-workflow-template
+      inputs:
+        parameters:
+          - name: job
+          - name: mainClass
+      outputs: {}
+      metadata: {}
+      resource:
+        action: create
+        manifest: |
+          apiVersion: "sparkoperator.k8s.io/v1beta2"
+          kind: SparkApplication
+          metadata:
+            generateName: {{inputs.parameters.job}}-
+          spec:
+            type: Scala
+            mode: cluster
+            image: "gcr.io/spark-operator/spark:v3.0.0"
+            imagePullPolicy: Always
+            mainClass: {{inputs.parameters.mainClass}}
+            mainApplicationFile: "local:///opt/spark/examples/jars/spark-examples_2.12-3.0.0.jar"
+            sparkVersion: "3.0.0"
+            restartPolicy:
+              type: Never
+            volumes:
+              - name: "test-volume"
+                hostPath:
+                  path: "/tmp"
+                  type: Directory
+            driver:
+              cores: 1
+              coreLimit: "1200m"
+              memory: "512m"
+              labels:
+                version: 3.0.0
+              serviceAccount: spark
+              volumeMounts:
+                - name: "test-volume"
+                  mountPath: "/tmp"
+            executor:
+              cores: 1
+              instances: 1
+              memory: "512m"
+              labels:
+                version: 3.0.0
+              volumeMounts:
+                - name: "test-volume"
+                  mountPath: "/tmp"
+        successCondition: status.applicationState.state in (COMPLETED)
+        failureCondition: 'status.applicationState.state in (FAILED, SUBMISSION_FAILED, UNKNOWN)'
