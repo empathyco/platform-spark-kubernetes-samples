@@ -1,0 +1,13 @@
+project: default
+spec:
+  source:
+    repoURL: 'https://github.com/empathyco/platform-spark-kubernetes-samples.git'
+    targetRevision: main
+  destination:
+    server: 'https://kubernetes.default.svc'
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
