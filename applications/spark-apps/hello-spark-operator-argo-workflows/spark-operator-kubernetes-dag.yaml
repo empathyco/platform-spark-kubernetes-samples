@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generate: spark-kubernetes-dag
+  name: spark-kubernetes-dag
 spec:
   entrypoint: sparkling-operator
   serviceAccountName: spark
