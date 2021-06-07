@@ -1,0 +1,19 @@
+argo-cd:
+  ## ArgoCD configuration
+  ## Ref: https://github.com/argoproj/argo-cd
+  ##
+
+  # Optional CRD installation for those without Helm hooks
+  installCRDs: true
+  server:
+    extraArgs:
+      - --insecure
+    ingress:
+      enabled: true
+      hosts:
+        - argo.localhost
+      paths:
+        - /
+    ## Use init containers to configure custom tooling
+    ## https://argoproj.github.io/argo-cd/operator-manual/custom_tools/
+    ## When using the volumes & volumeMounts section bellow, please comment out those above.
