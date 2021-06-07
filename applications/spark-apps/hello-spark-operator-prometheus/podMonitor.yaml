@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: hello-spark-operator-prometheus
+  labels: 
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      sparkoperator.k8s.io/app-name: spark-pi-prom
+  podMetricsEndpoints:
+    - relabelings:
+      - action: replace
+        targetLabel: __address__
+        sourceLabels:
+          - __meta_kubernetes_pod_ip
+        replacement: $1:8090
+      path: /
