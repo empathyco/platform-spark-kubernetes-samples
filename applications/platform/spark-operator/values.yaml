@@ -7,3 +7,5 @@ spark-operator:
     enable: true
   podMonitor:
     enable: true
+    labels:
+      release: prometheus
