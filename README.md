@@ -1,11 +1,15 @@
 # Spark on Kubernetes 
 The aim of this repo is show some samples about how to launch and orchestrate Spark jobs on Kubernetes
+
 The main points of this repo are: 
 * Localhost deployment: Kind 
 * Build Spark job as Docker image
-* Spark submit: easiest way to handle Spark jobs
-* Spark operator: beta status, so promising 
+* Platform Applications Deployments 
+* Spark Applications Deployments 
+* Vanilla k8s
 * How to orchestrate the Spark jobs on Kubernetes: Argo Workflows
+
+Besides, you can follow the [slides](Running%20Spark%20on%20Kubernetes.pdf) for the [K8s Days Spain 2021](https://kcdspain.com/)
 
 
 ## Deploy cluster localhost
@@ -36,6 +40,7 @@ cd amazon-eks-apache-spark-etl-sample
 docker build --target=spark -t k8s-test/spark:v2.4.4 .
 
 docker build -t k8s-test/spark-on-localhost:v1.0 .
+
 ```
 
 Now the image should be load to kind as follows: 
@@ -46,10 +51,56 @@ kind load docker-image k8s-test/spark:v2.4.4
 kind load docker-image k8s-test/spark-on-localhost:v1.0
 ```
 
+A Docker image with Prometheus and aws-hadoop
 
-## Spark on Kubernetes
+```
+cd ./spark-docker
+docker build -t k8s-test/spark-prometheus:v1.6 .
+kind load docker-image k8s-test/spark-prometheus:v1.6
+```
 
-### Spark submit
+## Platform Applications Deployments 
+
+* [ArgoCD](applications/argocd/values.yaml)
+* [platform-apps](deployments/applications/platform/argo-apps.yaml)
+  * [Argo-Workflows](applications/platform/argo-workflows/values.yaml)
+  * [Spark Operator](applications/platform/spark-operator/values.yaml)
+  * [kube-prometheus-stack](applications/platform/spark-operator/values.yaml)
+
+ArgoCD
+
+```sh
+cd ./applications/argocd
+helm install argocd . -f values.yaml
+```
+ArgoCD will be deployed 
+
+```sh
+kubectl apply -f ./deployments/applications/platform/argo-apps.yaml
+```
+
+All the platform applications will be created on ArgoCD
+
+  
+## Spark Applications Deployments 
+* [Spark-apps](deployments/applications/spark-apps/argo-apps.yaml)
+  * [hello-spark-submit](applications/spark-apps/hello-spark-submit/test-job-example.yaml)
+  * [hello-spark-operator](applications/spark-apps/hello-spark-operator/spark-application.yaml)
+  * [hello-argo-workflows](applications/spark-apps/hello-argo-workflows/hello-world-dag.yaml) 
+  * [hello-spark-operator-argo-workflows](applications/spark-apps/hello-spark-operator-argo-workflows/spark-operator-kubernetes-dag.yaml)
+  * [hello-argo-workflow-template](applications/spark-apps/hello-argo-workflow-template/hello-argo-workflow-template.yaml)
+  * [spark-history-server](applications/spark-apps/spark-history-server/values.yaml)
+  * [hello-spark-operator-history](applications/spark-apps/hello-spark-operator-history/spark-application.yaml)
+
+```sh 
+kubectl apply -f ./deployments/applications/spark-apps/argo-apps.yaml
+```
+
+## Vanilla K8s
+
+### Spark on Kubernetes
+
+#### Spark submit
 
 It's the easiest way to run Spark on Kubernetes
 
@@ -97,7 +148,7 @@ kubectl apply -f spark-submit/test-job-example.yaml
 kubectl apply -f spark-submit/test-job-eks.yaml (From localhost it fails because IAM roles permissions)
 ```
 
-### Spark Operator 
+#### Spark Operator 
 
 Project status in beta, more info can be found in:
 [https://github.com/GoogleCloudPlatform/spark-on-k8s-operator](https://github.com/GoogleCloudPlatform/spark-on-k8s-operator)
@@ -110,12 +161,12 @@ helm install my-release spark-operator/spark-operator --namespace spark-operator
 kubectl apply -f spark-operator/spark-application.yaml
 ```
 
-### Spark UI 
+#### Spark UI 
 ```sh
 kubectl port-forward spark-driver-po 4040:4040
 ```
 
-## Argo Workflows 
+#### Argo Workflows 
 
 Some Highlights: 
 * API Rest to submit, get and delete workflows
@@ -157,6 +208,10 @@ kubectl create -f argo-workflows/spark-kubernetes-dag.yaml
 Hitting http://localhost:2746 the workflows can be found out
 
 ![](2020-12-30-16-37-39.png)
+
+# Slides 
+
+[Here](Running%20Spark%20on%20Kubernetes.pdf)
 
 # References
 * https://github.com/GoogleCloudPlatform/spark-on-k8s-operator
