@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 27,
-  "iteration": 1617874483589,
+  "id": 22,
+  "iteration": 1623163523224,
   "links": [],
   "panels": [
     {
@@ -45,9 +45,7 @@
       "datasource": null,
       "description": "Total number of SparkApplication submitted by the Operator.",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "format": "none",
@@ -59,8 +57,8 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 2,
-        "w": 4,
+        "h": 3,
+        "w": 12,
         "x": 0,
         "y": 1
       },
@@ -98,7 +96,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "spark-operator-65899d67cf-hrntl",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "spark_app_submit_count{pod=\"$Spark_Operator_Instance\"}",
@@ -135,9 +133,7 @@
       "datasource": null,
       "description": "Total number of SparkApplication which failed to complete.",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "format": "none",
@@ -150,8 +146,8 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
-        "x": 4,
+        "w": 12,
+        "x": 12,
         "y": 1
       },
       "id": 22,
@@ -188,7 +184,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "spark_app_failure_count{app_type=\"Unknown\", container=\"spark-operator\", endpoint=\"metrics\", instance=\"10.206.73.236:10254\", job=\"kube-system/spark-operator-podmonitor\", namespace=\"kube-system\", pod=\"spark-operator-65899d67cf-hrntl\"}",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "spark_app_failure_count{pod=\"$Spark_Operator_Instance\"}",
@@ -213,199 +209,6 @@
       "valueName": "current"
     },
     {
-      "aliasColors": {},
-      "bars": true,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "description": "Execution time for applications which succeeded.",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 8,
-        "y": 1
-      },
-      "hiddenSeries": false,
-      "id": 18,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pluginVersion": "7.1.5",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "spark_app_success_execution_time_microseconds{pod=\"$Spark_Operator_Instance\"}",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "quantile-{{quantile}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Execution time for SparkApplications which succeeded.",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "decimals": null,
-          "format": "µs",
-          "label": null,
-          "logBase": 10,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": true,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "description": "Execution time for applications which failed.",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 16,
-        "y": 1
-      },
-      "hiddenSeries": false,
-      "id": 29,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pluginVersion": "7.1.5",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "spark_app_failure_execution_time_microseconds{pod=\"$Spark_Operator_Instance\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "quantile-{{quantile}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Execution time for SparkApplications which failed.",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "decimals": null,
-          "format": "µs",
-          "label": null,
-          "logBase": 10,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
       "cacheTimeout": null,
       "colorBackground": false,
       "colorValue": false,
@@ -417,9 +220,7 @@
       "datasource": null,
       "description": "Total number of SparkApplication which are currently running.",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "format": "none",
@@ -431,10 +232,10 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 2,
-        "w": 4,
+        "h": 3,
+        "w": 12,
         "x": 0,
-        "y": 3
+        "y": 4
       },
       "id": 14,
       "interval": null,
@@ -470,7 +271,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "spark-operator-65899d67cf-hrntl",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "spark_app_running_count{pod=\"$Spark_Operator_Instance\"}",
@@ -509,9 +310,7 @@
       "datasource": null,
       "description": "Total number of Spark Executors which failed.",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "format": "none",
@@ -524,8 +323,8 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
-        "x": 4,
+        "w": 12,
+        "x": 12,
         "y": 4
       },
       "id": 20,
@@ -562,7 +361,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "spark-operator-65899d67cf-hrntl",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "spark_app_executor_failure_count{pod=\"$Spark_Operator_Instance\"}",
@@ -599,9 +398,7 @@
       "datasource": null,
       "description": "Total number of SparkApplication which completed successfully.",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "format": "none",
@@ -614,9 +411,9 @@
       },
       "gridPos": {
         "h": 2,
-        "w": 4,
+        "w": 12,
         "x": 0,
-        "y": 5
+        "y": 7
       },
       "id": 16,
       "interval": null,
@@ -652,7 +449,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "spark-operator-65899d67cf-hrntl",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "spark_app_success_count{pod=\"$Spark_Operator_Instance\"}",
@@ -680,95 +477,6 @@
     {
       "cacheTimeout": null,
       "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": null,
-      "description": "Total number of Spark Executors which are currently running.",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 4,
-        "x": 0,
-        "y": 7
-      },
-      "id": 26,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "spark_app_executor_running_count{app_type=\"Unknown\", container=\"spark-operator\", endpoint=\"metrics\", instance=\"10.206.73.236:10254\", job=\"kube-system/spark-operator-podmonitor\", namespace=\"kube-system\", pod=\"spark-operator-65899d67cf-hrntl\"}",
-      "targets": [
-        {
-          "expr": "spark_app_executor_running_count{pod=\"$Spark_Operator_Instance\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "thresholds": "",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Running Spark Executors",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
       "colorValue": true,
       "colors": [
         "#299c46",
@@ -778,9 +486,7 @@
       "datasource": null,
       "description": "Total number of Spark Executors which completed successfully.",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "format": "none",
@@ -792,9 +498,9 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 2,
-        "w": 4,
-        "x": 4,
+        "h": 4,
+        "w": 12,
+        "x": 12,
         "y": 7
       },
       "id": 28,
@@ -831,7 +537,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "spark_app_executor_success_count{app_type=\"Unknown\", container=\"spark-operator\", endpoint=\"metrics\", instance=\"10.206.73.236:10254\", job=\"kube-system/spark-operator-podmonitor\", namespace=\"kube-system\", pod=\"spark-operator-65899d67cf-hrntl\"}",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "spark_app_executor_success_count{pod=\"$Spark_Operator_Instance\"}",
@@ -856,13 +562,100 @@
       "valueName": "current"
     },
     {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": null,
+      "description": "Total number of Spark Executors which are currently running.",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 12,
+        "x": 0,
+        "y": 9
+      },
+      "id": 26,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "expr": "spark_app_executor_running_count{pod=\"$Spark_Operator_Instance\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Running Spark Executors",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
       "collapsed": false,
       "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 11
       },
       "id": 2,
       "panels": [],
@@ -882,9 +675,7 @@
       "datasource": "Prometheus",
       "description": "Total number of adds handled by work queue",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "format": "none",
@@ -897,9 +688,9 @@
       },
       "gridPos": {
         "h": 2,
-        "w": 4,
+        "w": 12,
         "x": 0,
-        "y": 10
+        "y": 12
       },
       "id": 4,
       "interval": null,
@@ -936,7 +727,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "spark-operator-65899d67cf-hrntl",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "spark_application_controller_adds{pod=\"$Spark_Operator_Instance\"}",
@@ -969,7 +760,6 @@
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "decimals": null,
           "mappings": [],
           "max": 100,
@@ -995,9 +785,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 4,
-        "y": 10
+        "w": 12,
+        "x": 12,
+        "y": 12
       },
       "id": 6,
       "links": [],
@@ -1011,9 +801,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "text": {}
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.5.3",
       "targets": [
         {
           "expr": "spark_application_controller_depth{pod=\"$Spark_Operator_Instance\"}",
@@ -1029,201 +820,6 @@
       "type": "gauge"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "cacheTimeout": null,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "description": "Latency for work queue",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 8,
-        "y": 10
-      },
-      "hiddenSeries": false,
-      "id": 10,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pluginVersion": "7.1.5",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "spark_application_controller_latency{pod=\"$Spark_Operator_Instance\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "quantile-{{quantile}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Latency for work queue",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "µs",
-          "label": null,
-          "logBase": 32,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "cacheTimeout": null,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "description": "How long processing an item from workqueue takes",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 16,
-        "y": 10
-      },
-      "hiddenSeries": false,
-      "id": 8,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pluginVersion": "7.1.5",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "spark_application_controller_work_duration{pod=\"$Spark_Operator_Instance\"}",
-          "format": "time_series",
-          "hide": false,
-          "instant": false,
-          "intervalFactor": 1,
-          "legendFormat": "quantile-{{quantile}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Processing an item from work queue duration",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "decimals": null,
-          "format": "µs",
-          "label": "",
-          "logBase": 32,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
       "cacheTimeout": null,
       "colorBackground": false,
       "colorValue": false,
@@ -1235,9 +831,7 @@
       "datasource": null,
       "description": "Total number of retries handled by work queue",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "format": "none",
@@ -1250,9 +844,9 @@
       },
       "gridPos": {
         "h": 2,
-        "w": 4,
+        "w": 12,
         "x": 0,
-        "y": 12
+        "y": 14
       },
       "id": 31,
       "interval": null,
@@ -1288,7 +882,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "spark_application_controller_retries{container=\"spark-operator\", endpoint=\"metrics\", instance=\"10.206.73.236:10254\", job=\"kube-system/spark-operator-podmonitor\", namespace=\"kube-system\", pod=\"spark-operator-65899d67cf-hrntl\"}",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "spark_application_controller_retries{pod=\"$Spark_Operator_Instance\"}",
@@ -1324,9 +918,7 @@
       "datasource": null,
       "description": "Unfinished work in seconds",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "format": "none",
@@ -1339,9 +931,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
+        "w": 12,
         "x": 0,
-        "y": 14
+        "y": 16
       },
       "id": 33,
       "interval": null,
@@ -1377,7 +969,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "spark_application_controller_unfinished_work_seconds{container=\"spark-operator\", endpoint=\"metrics\", instance=\"10.206.73.236:10254\", job=\"kube-system/spark-operator-podmonitor\", namespace=\"kube-system\", pod=\"spark-operator-65899d67cf-hrntl\"}",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "spark_application_controller_unfinished_work_seconds{pod=\"$Spark_Operator_Instance\"}",
@@ -1413,9 +1005,7 @@
       "datasource": null,
       "description": "Longest running processor in microseconds",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "format": "none",
@@ -1428,9 +1018,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 4,
-        "y": 14
+        "w": 12,
+        "x": 12,
+        "y": 16
       },
       "id": 35,
       "interval": null,
@@ -1466,7 +1056,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "spark_application_controller_longest_running_processor_microseconds{container=\"spark-operator\", endpoint=\"metrics\", instance=\"10.206.73.236:10254\", job=\"kube-system/spark-operator-podmonitor\", namespace=\"kube-system\", pod=\"spark-operator-65899d67cf-hrntl\"}",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "spark_application_controller_longest_running_processor_microseconds{pod=\"$Spark_Operator_Instance\"}",
@@ -1498,7 +1088,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 20
       },
       "id": 37,
       "panels": [],
@@ -1517,9 +1107,7 @@
       "datasource": "Prometheus",
       "description": "Total number of adds handled by workqueue",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "format": "none",
@@ -1531,10 +1119,10 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 2,
-        "w": 4,
+        "h": 3,
+        "w": 12,
         "x": 0,
-        "y": 19
+        "y": 21
       },
       "id": 39,
       "interval": null,
@@ -1571,7 +1159,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "spark-operator-65899d67cf-hrntl",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "scheduled_spark_application_controller_adds{pod=\"$Spark_Operator_Instance\"}",
@@ -1604,7 +1192,6 @@
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "decimals": null,
           "mappings": [],
           "max": 100,
@@ -1629,10 +1216,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 4,
-        "y": 19
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 21
       },
       "id": 45,
       "links": [],
@@ -1646,9 +1233,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "text": {}
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.5.3",
       "targets": [
         {
           "expr": "scheduled_spark_application_controller_depth{pod=\"$Spark_Operator_Instance\"}",
@@ -1664,201 +1252,6 @@
       "type": "gauge"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "cacheTimeout": null,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "description": "Latency for work queue",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 8,
-        "y": 19
-      },
-      "hiddenSeries": false,
-      "id": 49,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pluginVersion": "7.1.5",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "scheduled_spark_application_controller_latency{pod=\"$Spark_Operator_Instance\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "quantile-{{quantile}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Latency for work queue",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "µs",
-          "label": null,
-          "logBase": 32,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "cacheTimeout": null,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "description": "How long processing an item from workqueue takes",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 16,
-        "y": 19
-      },
-      "hiddenSeries": false,
-      "id": 51,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pluginVersion": "7.1.5",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "scheduled_spark_application_controller_work_duration{pod=\"$Spark_Operator_Instance\"}",
-          "format": "time_series",
-          "hide": false,
-          "instant": false,
-          "intervalFactor": 1,
-          "legendFormat": "quantile-{{quantile}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Processing an item from work queue duration",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "decimals": null,
-          "format": "µs",
-          "label": "",
-          "logBase": 32,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
       "cacheTimeout": null,
       "colorBackground": false,
       "colorValue": false,
@@ -1870,9 +1263,7 @@
       "datasource": null,
       "description": "Total number of retries handled by work queue",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "format": "none",
@@ -1885,9 +1276,9 @@
       },
       "gridPos": {
         "h": 2,
-        "w": 4,
+        "w": 12,
         "x": 0,
-        "y": 21
+        "y": 24
       },
       "id": 43,
       "interval": null,
@@ -1923,7 +1314,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "scheduled_spark_application_controller_retries{container=\"spark-operator\", endpoint=\"metrics\", instance=\"10.206.73.236:10254\", job=\"kube-system/spark-operator-podmonitor\", namespace=\"kube-system\", pod=\"spark-operator-65899d67cf-hrntl\"}",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "scheduled_spark_application_controller_retries{pod=\"$Spark_Operator_Instance\"}",
@@ -1959,9 +1350,7 @@
       "datasource": null,
       "description": "Unfinished work in seconds",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "format": "none",
@@ -1974,9 +1363,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
+        "w": 12,
         "x": 0,
-        "y": 23
+        "y": 26
       },
       "id": 41,
       "interval": null,
@@ -2012,7 +1401,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "scheduled_spark_application_controller_unfinished_work_seconds{container=\"spark-operator\", endpoint=\"metrics\", instance=\"10.206.73.236:10254\", job=\"kube-system/spark-operator-podmonitor\", namespace=\"kube-system\", pod=\"spark-operator-65899d67cf-hrntl\"}",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "scheduled_spark_application_controller_unfinished_work_seconds{pod=\"$Spark_Operator_Instance\"}",
@@ -2048,9 +1437,7 @@
       "datasource": null,
       "description": "Longest running processor in microseconds",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "format": "none",
@@ -2063,9 +1450,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 4,
-        "y": 23
+        "w": 12,
+        "x": 12,
+        "y": 26
       },
       "id": 47,
       "interval": null,
@@ -2101,7 +1488,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "scheduled_spark_application_controller_longest_running_processor_microseconds{container=\"spark-operator\", endpoint=\"metrics\", instance=\"10.206.73.236:10254\", job=\"kube-system/spark-operator-podmonitor\", namespace=\"kube-system\", pod=\"spark-operator-65899d67cf-hrntl\"}",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "scheduled_spark_application_controller_longest_running_processor_microseconds{pod=\"$Spark_Operator_Instance\"}",
@@ -2128,7 +1515,7 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 26,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -2137,18 +1524,23 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "spark-operator-65899d67cf-hrntl",
-          "value": "spark-operator-65899d67cf-hrntl"
+          "text": "spark-operator-588dd7b89c-h6klb",
+          "value": "spark-operator-588dd7b89c-h6klb"
         },
         "datasource": "Prometheus",
         "definition": "label_values(kube_pod_labels{label_app_kubernetes_io_name=\"spark-operator\"}, pod)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Spark Operator Instance",
         "multi": false,
         "name": "Spark_Operator_Instance",
         "options": [],
-        "query": "label_values(kube_pod_labels{label_app_kubernetes_io_name=\"spark-operator\"}, pod)",
+        "query": {
+          "query": "label_values(kube_pod_labels{label_app_kubernetes_io_name=\"spark-operator\"}, pod)",
+          "refId": "Prometheus-Spark_Operator_Instance-Variable-Query"
+        },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -2191,5 +1583,6 @@
     ]
   },
   "timezone": "browser",
-  "title": "Spark Operator"
+  "title": "Spark Operator",
+  "uid": "QK_ufP6Gk"
 }
