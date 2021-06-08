@@ -1,0 +1,52 @@
+apiVersion: "sparkoperator.k8s.io/v1beta2"
+kind: SparkApplication
+metadata:
+  name: spark-pi-history
+  namespace: default
+spec:
+  securityContext: 
+    runAsUser: 0
+  type: Scala
+  mode: cluster
+  image: "k8s-test/spark-prometheus:v1.6"
+  imagePullPolicy: Never
+  mainClass: org.apache.spark.examples.SparkPi
+  mainApplicationFile: "local:///opt/spark/examples/jars/spark-examples_2.12-3.0.0.jar"
+  sparkVersion: "3.0.0"
+  restartPolicy:
+    type: Never
+  driver:
+    env: 
+      - name: AWS_ACCESS_KEY_ID
+        valueFrom:
+          secretKeyRef:
+            name: aws-secrets
+            key: AWS_ACCESS_KEY
+      - name: AWS_SECRET_ACCESS_KEY
+        valueFrom:
+          secretKeyRef:
+            name: aws-secrets
+            key: AWS_SECRET_ACCESS_KEY
+      - name: AWS_REGION
+        value: "eu-west-1"
+    cores: 1
+    coreLimit: "1200m"
+    memory: "512m"
+    labels:
+      version: 3.0.0
+    serviceAccount: spark
+  executor:
+    cores: 1
+    instances: 1
+    memory: "512m"
+    labels:
+      version: 3.0.0
+  hadoopConf:
+    spark.hadoop.fs.s3a.impl: org.apache.hadoop.fs.s3a.S3AFileSystem
+    spark.hadoop.fs.s3a.path.style.access: "true"
+  sparkConf:
+    extraJavaOptions: -Dcom.amazonaws.services.s3.enableV4=true
+    spark.eventLog.dir: 's3a://k8s-days-spain-spark/spark-logs'
+    spark.eventLog.enabled: 'true'
+    spark.eventLog.rolling.enabled: 'true'
+    spark.eventLog.rolling.maxFileSize: 128m
