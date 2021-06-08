@@ -1,0 +1,17 @@
+{{- if .Values.sparkHistoryServer.create -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "sparkHistoryServer.fullname" . }}
+  labels:
+    {{- include "sparkHistoryServer.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.sparkHistoryServer.service.type }}
+  ports:
+  - port: {{ .Values.sparkHistoryServer.service.externalPort }}
+    targetPort: {{ .Values.sparkHistoryServer.service.internalPort }}
+    protocol: TCP
+    name: {{ .Chart.Name }}
+  selector:
+    {{- include "sparkHistoryServer.selectorLabels" . | nindent 6 }}
+{{- end }}

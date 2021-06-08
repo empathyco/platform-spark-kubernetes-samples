@@ -1,0 +1,73 @@
+{{- if .Values.sparkHistoryServer.create -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "sparkHistoryServer.fullname" . }}
+  labels:
+    {{- include "sparkHistoryServer.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.sparkHistoryServer.replicaCount }}
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 50%
+      maxSurge: 1
+  selector:
+    matchLabels:
+      {{- include "sparkHistoryServer.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "sparkHistoryServer.selectorLabels" . | nindent 8 }}
+    spec:
+     {{- with $.Values.image.pullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "sparkHistoryServer.serviceAccountName" . }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag | default $.Chart.Version }}"
+        imagePullPolicy: {{ $.Values.image.pullPolicy }}
+        command:
+          - '/opt/bitnami/spark/sbin/start-history-server.sh'
+        env:
+          - name: SPARK_NO_DAEMONIZE
+            value: "false"
+          - name: SPARK_HISTORY_OPTS
+            value: "-Dspark.history.fs.logDirectory={{ .Values.sparkHistoryServer.s3logDir }}"
+          - name: SPARK_CONF_DIR
+            value: /opt/bitnami/spark/conf
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom: 
+              secretKeyRef: 
+                name: aws-secrets
+                key: AWS_ACCESS_KEY
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom: 
+                secretKeyRef: 
+                  name: aws-secrets
+                  key: AWS_SECRET_ACCESS_KEY
+          - name: AWS_REGION
+            value: "eu-west-1"
+        volumeMounts:
+          - name: config-volume
+            mountPath: /opt/bitnami/spark/conf/spark-defaults.conf
+            subPath: spark-defaults.conf
+        ports:
+          - name: http
+            containerPort: {{ .Values.sparkHistoryServer.service.internalPort }}
+            protocol: TCP
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        resources:
+{{ toYaml .Values.sparkHistoryServer.resources | indent 12 }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ template "sparkHistoryServer.fullname" . }}
+      {{- if .Values.sparkHistoryServer.securityContext }}
+      securityContext: {{- toYaml .Values.sparkHistoryServer.securityContext | nindent 8 }}
+      {{- end }}
+{{- end }}

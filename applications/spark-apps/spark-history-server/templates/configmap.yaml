@@ -1,0 +1,12 @@
+{{- if .Values.sparkHistoryServer.create -}}
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ template "sparkHistoryServer.fullname" . }}
+  labels:
+    {{- include "sparkHistoryServer.labels" . | nindent 4 }}
+data:
+  spark-defaults.conf: |-
+    spark.history.fs.eventLog.rolling.maxFilesToRetain=5
+    spark.history.fs.cleaner.enabled=true
+{{- end }}

@@ -1,0 +1,25 @@
+{{- if .Values.sparkHistoryServer.create -}}
+{{- if .Values.sparkHistoryServer.ingress.enabled -}}
+{{- $serviceName := include "sparkHistoryServer.fullname" . -}}
+{{- $servicePort := .Values.sparkHistoryServer.service.externalPort -}}
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "sparkHistoryServer.fullname" . }}
+  labels:
+    {{- include "sparkHistoryServer.labels" . | nindent 4 }}
+  {{- with .Values.sparkHistoryServer.ingress.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+  rules:
+  - host: {{ .Values.sparkHistoryServer.ingress.host }}
+    http:
+      paths:
+      - path: {{ .Values.sparkHistoryServer.ingress.path }}
+        backend:
+          serviceName: {{ $serviceName }}
+          servicePort: {{ $servicePort }}
+{{- end }}
+{{- end }}

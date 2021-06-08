@@ -1,0 +1,64 @@
+# -- Set runtime image to use for running the jobs
+# @default -- -
+image:
+  repository: bitnami/spark
+  # -- Tag to use
+  # @default -- *app-version*
+  tag: "3.0.1"
+  # -- Pull policy to apply
+  pullPolicy: IfNotPresent
+  # -- Image pull secrets
+  pullSecrets: [ ]
+
+
+
+# -- Spark history server configuration - the history server uses the same image configuration as the jobs
+# and unless specified resources are created as app-name-history-server. If enabled, the job sparkConfig
+# will include the necessary logging configs
+# @default -- -
+sparkHistoryServer:
+  # -- Whether to create a history server
+  create: true
+  # -- S3 path to read logs from
+  # @default -- **required**
+  s3logDir: "s3a://k8s-days-spain-spark/"
+
+  ingress:
+    # -- Whether the ingress for the history server should be enabled
+    enabled: true
+    # -- History server ingress host
+    # @default -- **required**
+    host: 'spark-history-server.localhost'
+    path: '/'
+    annotations: { }
+
+  service:
+    externalPort: 80
+    internalPort: 18080
+    type: ClusterIP
+
+  # Undocumented
+  replicaCount: 1
+  resources:
+    limits:
+      #cpu: 500m
+      memory: 512Mi
+
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+  securityContext:
+    runAsUser: 0
+
+  serviceAccount:
+    # -- Whether a ServiceAccount for the Spark History server should be created
+    create: true
+    # -- The name of the ServiceAccount to create or use
+    # @default --  *app-name-history-service*
+    name: ''
+    # Annotations for the Service Account
+    # Example:
+    # annotations:
+    #   eks.amazonaws.com/role-arn: arn:aws:iam::xxxxx:role/spark-history-server
+    annotations: {}
