@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    app.kubernetes.io/name: hello-spark-operator
+  name: hello-spark-operator
+  namespace: default
+spec:
+  rules:
+  - host: hello-spark-operator.localhost
+    http:
+      paths:
+      - backend:
+          serviceName: spark-pi-ui-svc
+          servicePort: 4040
+        pathType: ImplementationSpecific
