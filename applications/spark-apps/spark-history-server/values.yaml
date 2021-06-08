@@ -21,7 +21,7 @@ sparkHistoryServer:
   create: true
   # -- S3 path to read logs from
   # @default -- **required**
-  s3logDir: "s3a://k8s-days-spain-spark/"
+  s3logDir: "s3a://k8s-days-spain-spark/spark-logs/"
 
   ingress:
     # -- Whether the ingress for the history server should be enabled
