@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-ARG SPARK_IMAGE=gcr.io/spark-operator/spark:v3.0.0
+ARG SPARK_IMAGE=gcr.io/spark-operator/spark-py:v3.0.0-hadoop3
 FROM ${SPARK_IMAGE}
 
 USER root
@@ -27,5 +27,9 @@ RUN chmod 644 /opt/spark/jars/jmx_prometheus_javaagent.jar
 RUN mkdir -p /etc/metrics/conf
 COPY conf/metrics.properties /etc/metrics/conf
 COPY conf/prometheus.yaml /etc/metrics/conf
+
+# add s3a connector
+ADD https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.1.0/hadoop-aws-3.1.0.jar $SPARK_HOME/jars
+ADD https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.11.874/aws-java-sdk-bundle-1.11.874.jar $SPARK_HOME/jars
 
 ENTRYPOINT [ "/opt/entrypoint.sh" ]
